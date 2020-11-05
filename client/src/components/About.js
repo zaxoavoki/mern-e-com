@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 
 function About() {
-	return <div>About</div>;
+    return <p>About</p>;
 }
 
 export default About;
