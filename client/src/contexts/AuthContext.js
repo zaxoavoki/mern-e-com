@@ -12,11 +12,10 @@ export default function AuthContextProvider(props) {
 
     cookies.addChangeListener((res) => {
         const user = res.value ? jwt_decode(res.value) : null;
-        setAuth({
+        setAuth((auth) => ({
+            ...auth,
             user,
-            logout: removeJWT,
-            login: setJWT,
-        });
+        }));
     });
 
     const jwt = cookies.get("jwt");

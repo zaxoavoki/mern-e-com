@@ -11,6 +11,8 @@ import Category from "./components/categories/Category";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 
+import Admin from "./components/admin/Admin";
+
 import Error from "./components/layout/Error";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -24,16 +26,13 @@ function App() {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/about" exact component={About} />
+                    <Route path="/admin" exact component={Admin} />
                     <Route path="/categories" exact component={Categories} />
                     <Route path="/categories/:categoryId" exact component={Category} />
                     {!user && (
                         <>
-                            <Route path="/login" exact>
-                                <Login />
-                            </Route>
-                            <Route path="/signup" exact>
-                                <Signup />
-                            </Route>
+                            <Route path="/login" exact component={Login} />
+                            <Route path="/signup" exact component={Signup} />
                         </>
                     )}
                     <Route component={Error} />

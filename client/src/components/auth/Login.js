@@ -38,7 +38,7 @@ function Login() {
             .catch((err) => {
                 setError({
                     ...error,
-                    submit: err,
+                    submit: typeof err === "string" ? err : "Something went wrong",
                 });
             });
     }

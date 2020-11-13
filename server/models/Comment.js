@@ -1,23 +1,20 @@
 const mongoose = require("mongoose");
 
 module.exports =
-    mongoose.models.Rating ||
+    mongoose.models.Comment ||
     mongoose.model(
-        "Rating",
+        "Comment",
         new mongoose.Schema(
             {
+                text: {
+                    type: String,
+                    required: true,
+                },
                 user_id: {
-                    type: mongoose.SchemaTypes.ObjectID,
-                    required: true,
+                    type: mongoose.SchemaTypes.ObjectId,
+                    ref: "User",
                 },
-                product_id: {
-                    type: mongoose.SchemaTypes.ObjectID,
-                    required: true,
-                },
-                stars: {
-                    type: Number,
-                    required: true,
-                },
+                images: [],
             },
             {
                 timestamps: {

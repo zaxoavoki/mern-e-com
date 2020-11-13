@@ -7,11 +7,16 @@ const productSeeder = require("./products");
 
 const seeders = [userSeeder(10), categorySeeder(10), productSeeder(10)];
 
-dbConnect().then((con) => {
-	Promise.all(seeders)
-		.then(() => {
-			console.log("Collections were seeded successfully.");
-			con.connections[0].close();
-		})
-		.catch(() => console.log("Something went wrong."));
-});
+(async (seeders) => {
+    const con = await dbConnect();
+    try {
+        for (const seeder of seeders) {
+            await seeder;
+        }
+    } catch (e) {
+        console.log(e, "Something went wrong. Try again.");
+        process.exit(-1);
+    }
+    console.log("Collections were seeded successfully.");
+    con.connections[0].close();
+})(seeders);
