@@ -28,9 +28,9 @@ function Header() {
                                 Hi, {user.username}
                             </span>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="#">
-                                    Settings
-                                </a>
+                                <Link to="/settings">
+                                    <span className="dropdown-item">Settings</span>
+                                </Link>
                                 {user.role === 2 && (
                                     <Link to="/admin">
                                         <span className="dropdown-item">Admin panel</span>

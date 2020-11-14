@@ -19,7 +19,7 @@ function Login() {
             password: !validator.isLength(password, { min: 6, max: 32 }),
         };
         setError(error);
-        return !Object.values(error).every(Boolean);
+        return !Object.values(error).some(Boolean);
     }
 
     function handleSubmit(e) {

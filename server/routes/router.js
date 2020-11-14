@@ -3,7 +3,8 @@ const express = require("express");
 // Routers
 const authRouter = require("./auth");
 const adminRouter = require("./admin/admin");
-const userRouter = require("./users/user");
+const userRouter = require("./users/users");
+const productRouter = require("./products/products");
 
 // Middlewares
 const authMiddleware = require("../middlewares/auth");
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.use("/admin", [authMiddleware, adminMiddleware], adminRouter);
 router.use("/users", userRouter);
+router.use("/products", productRouter);
 router.use(
     "/",
     function (req, res, next) {

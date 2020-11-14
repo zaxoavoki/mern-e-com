@@ -12,6 +12,7 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 
 import Admin from "./components/admin/Admin";
+import Settings from "./components/settings/Settings";
 
 import Error from "./components/layout/Error";
 import Header from "./components/layout/Header";
@@ -24,17 +25,16 @@ function App() {
             <Header />
             <main className="container py-5">
                 <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/about" exact component={About} />
-                    <Route path="/admin" exact component={Admin} />
-                    <Route path="/categories" exact component={Categories} />
-                    <Route path="/categories/:categoryId" exact component={Category} />
-                    {!user && (
-                        <>
-                            <Route path="/login" exact component={Login} />
-                            <Route path="/signup" exact component={Signup} />
-                        </>
-                    )}
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/about" component={About} />
+                    <Route exact path="/admin" component={Admin} />
+                    <Route exact path="/categories" component={Categories} />
+                    <Route exact path="/categories/:categoryId" component={Category} />
+
+                    {user && <Route path="/settings" component={Settings} />}
+                    {!user && <Route exact path="/login" component={Login} />}
+                    {!user && <Route exact path="/signup" component={Signup} />}
+
                     <Route component={Error} />
                 </Switch>
             </main>
