@@ -20,7 +20,7 @@ module.exports =
                     required: true,
                 },
                 category: {
-                    type: mongoose.SchemaTypes.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "Category",
                 },
                 // 	TODO: Add added_by: Moderator_id

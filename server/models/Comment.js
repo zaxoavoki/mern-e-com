@@ -10,9 +10,13 @@ module.exports =
                     type: String,
                     required: true,
                 },
-                user_id: {
-                    type: mongoose.SchemaTypes.ObjectId,
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "User",
+                },
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Product",
                 },
                 images: [],
             },

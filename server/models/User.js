@@ -21,6 +21,12 @@ module.exports =
                     default: 0,
                     //    admin - 2, mod - 1, user - 0
                 },
+                saved: [
+                    {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "Product",
+                    },
+                ],
             },
             {
                 timestamps: {

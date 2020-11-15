@@ -1,12 +1,17 @@
-const express = require("express");
 const bcrypt = require("bcrypt");
+const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
 const router = express.Router();
 
-// User log in
+/**
+ * Creates jwt token for logged user.
+ *
+ * @method  POST
+ * @route   /login
+ */
 router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
@@ -38,7 +43,12 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
 });
 
-// User sign up
+/**
+ * Creates jwt token after writting user into DB.
+ *
+ * @method  POST
+ * @route   /register
+ */
 router.post("/register", async (req, res) => {
     if (req.body.password !== req.body.password_confirmation) {
         return res.status(403).json({ error: "Passwords do not match" });

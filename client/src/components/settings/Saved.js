@@ -1,21 +1,29 @@
-import React from "react";
-import faker from "faker";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import Small from "../products/Small";
 
 export default function Saved() {
-    const products = Array.from({ length: Math.round(Math.random() * 10) }, () => {
-        return {
-            title: faker.commerce.productName(),
-            description: faker.commerce.productDescription(),
-            price: faker.commerce.price(),
-        };
-    });
+    const { jwt } = useContext(AuthContext);
+    const [saved, setSaved] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/users/saved", {
+            headers: {
+                Authorization: jwt,
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                setSaved(res);
+            });
+    }, []);
 
     return (
         <div className="row">
             <div className="col-12 mb-3">
-                {products.map((product, i) => (
+                {saved.map((product, i) => (
                     <Small key={i} product={product} />
                 ))}
             </div>

@@ -1,16 +1,24 @@
-import React from "react";
-import faker from "faker";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import Small from "../products/Small";
 
 export default function Bought() {
-    const products = Array.from({ length: Math.round(Math.random() * 10) }, () => {
-        return {
-            title: faker.commerce.productName(),
-            description: faker.commerce.productDescription(),
-            price: faker.commerce.price(),
-        };
-    });
+    const { jwt } = useContext(AuthContext);
+    const products = [];
+
+    useEffect(() => {
+        fetch("http://localhost:3001/users/bought", {
+            headers: {
+                Authorization: jwt,
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                // TODO: Handle it
+            });
+    }, []);
 
     return (
         <div className="row">

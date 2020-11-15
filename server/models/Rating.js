@@ -6,12 +6,12 @@ module.exports =
         "Rating",
         new mongoose.Schema(
             {
-                user_id: {
-                    type: mongoose.SchemaTypes.ObjectID,
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
                     required: true,
                 },
-                product_id: {
-                    type: mongoose.SchemaTypes.ObjectID,
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
                     required: true,
                 },
                 stars: {

@@ -21,6 +21,7 @@ export default function AuthContextProvider(props) {
     const jwt = cookies.get("jwt");
     const user = jwt ? jwt_decode(jwt) : null;
     const [auth, setAuth] = useState({
+        jwt,
         user,
         logout: removeJWT,
         login: setJWT,

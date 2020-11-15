@@ -6,12 +6,12 @@ module.exports =
         "Transaction",
         new mongoose.Schema(
             {
-                user_id: {
-                    type: mongoose.SchemaTypes.ObjectId,
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "User",
                 },
-                product_id: {
-                    type: mongoose.SchemaTypes.ObjectId,
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "Product",
                 },
                 count: {

@@ -6,8 +6,8 @@ module.exports =
         "Inventory",
         new mongoose.Schema(
             {
-                product_id: {
-                    type: mongoose.SchemaTypes.ObjectID,
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
                     required: true,
                 },
                 count: {
