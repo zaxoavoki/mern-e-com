@@ -1,5 +1,8 @@
 const express = require("express");
 
+const authMiddleware = require("../../middlewares/auth");
+const adminMiddleware = require("../../middlewares/admin");
+
 const Category = require("../../models/Category");
 const Product = require("../../models/Product");
 
@@ -26,6 +29,22 @@ router.get("/:id", async (req, res) => {
         ...(await Category.findOne({ _id: req.params.id }, {}, { lean: true })),
         products: await Product.find({ category: req.params.id }),
     });
+});
+
+router.put("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
+    // update category in db
+    // new data is located in req.body
+    // just override it
+});
+
+router.post("/create", [authMiddleware, adminMiddleware], async (req, res) => {
+    // add new category
+    // all data is stored in req.body
+});
+
+router.delete("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
+    // delete category from db
+    // use req.params.id
 });
 
 module.exports = router;

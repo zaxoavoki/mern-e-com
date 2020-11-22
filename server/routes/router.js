@@ -3,8 +3,9 @@ const express = require("express");
 // Routers
 const authRouter = require("./auth");
 const adminRouter = require("./admin/admin");
-const userRouter = require("./users/index");
+const userRouter = require("./users/users");
 const productRouter = require("./products/products");
+const commentsRouter = require("./products/comments");
 const categoryRouter = require("./categories/categories");
 
 // Middlewares

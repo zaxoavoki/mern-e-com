@@ -1,9 +1,9 @@
-const express = require("express");
+const { Router } = require("express");
 
 const authMiddleware = require("../../middlewares/auth");
 const adminMiddleware = require("../../middlewares/admin");
 
-const router = express.Router();
+const router = Router();
 
 /**
  * Update unique user in DB.
