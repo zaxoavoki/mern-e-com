@@ -1,32 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-
+import { saved as getSaved, saveOrUnsave } from "../../api/products";
 import Small from "../products/Small";
+import { useAlert } from "react-alert";
 
 export default function Saved() {
-    const { jwt } = useContext(AuthContext);
-    const [saved, setSaved] = useState([]);
+  const { token } = useContext(AuthContext);
+  const [saved, setSaved] = useState([]);
+  const alert = useAlert();
 
-    useEffect(() => {
-        fetch("http://localhost:3001/users/saved", {
-            headers: {
-                Authorization: jwt,
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                setSaved(res);
-            });
-    }, []);
+  useEffect(() => {
+    getSaved(token)
+      .then((res) => setSaved(res))
+      .catch(() => {});
+  }, []);
 
-    return (
-        <div className="row">
-            <div className="col-12 mb-3">
-                {saved.map((product, i) => (
-                    <Small key={i} product={product} />
-                ))}
-            </div>
-        </div>
-    );
+  function deleteFromSaved(id) {
+    saveOrUnsave(id, token)
+      .then((res) => {
+        if (!res) {
+          alert.success("Product was deleted from saved.");
+          setSaved((prev) => prev.filter((e) => e._id != id));
+        }
+      })
+      .catch(() => {});
+  }
+
+  return (
+    <div className="row">
+      <div className="col-12 mb-3">
+        {saved.length === 0 && <p>There is no any saved product yet.</p>}
+        {saved.length !== 0 && saved.map((product, i) => <Small key={i} deleteFromSaved={deleteFromSaved} product={product} />)}
+      </div>
+    </div>
+  );
 }

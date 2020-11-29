@@ -6,30 +6,25 @@ import jwt_decode from "jwt-decode";
 export const AuthContext = React.createContext();
 
 export default function AuthContextProvider(props) {
-    const cookies = new Cookies();
-    const removeJWT = () => cookies.remove("jwt");
-    const setJWT = (token) => cookies.set("jwt", token);
+  const cookies = new Cookies();
 
-    cookies.addChangeListener((res) => {
-        const user = res.value ? jwt_decode(res.value) : null;
-        setAuth((auth) => ({
-            ...auth,
-            user,
-        }));
-    });
+  cookies.addChangeListener((res) => {
+    // Update state only if auth cookies were updated
+    if (res.name === process.env.REACT_APP_JWT_COOKIE_NAME) {
+      setAuth((auth) => ({
+        ...auth,
+        user: res.value ? jwt_decode(res.value) : null,
+      }));
+    }
+  });
 
-    const jwt = cookies.get("jwt");
-    const user = jwt ? jwt_decode(jwt) : null;
-    const [auth, setAuth] = useState({
-        jwt,
-        user,
-        logout: removeJWT,
-        login: setJWT,
-    });
+  const token = cookies.get("token");
+  const user = token ? jwt_decode(token) : null;
+  const [auth, setAuth] = useState({ token, user, cookies });
 
-    return <AuthContext.Provider value={auth}>{props.children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={auth}>{props.children}</AuthContext.Provider>;
 }
 
 AuthContextProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
