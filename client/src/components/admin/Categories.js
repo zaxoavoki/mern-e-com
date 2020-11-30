@@ -13,28 +13,17 @@ export default function Categories() {
 
   useEffect(() => {
     getAll()
-      .then((res) => {
-        setCategories(res);
-      })
+      .then((res) => setCategories(res))
       .catch(() => {});
   }, []);
 
   function addCategory() {
-    // TODO: Add category edit form
-  }
-
-  function editCategory(id) {
-    const idx = categories.findIndex((e) => e._id === id);
-    setData({
-      name: categories[idx].name,
-      description: categories[idx].description,
-      onClick: updateCategory,
-      text: "Update category",
-    });
-  }
-
-  function updateCategory(id, data, token) {
-    // TODO: Add form update method
+    add(data, token)
+      .then((res) => {
+        alert.success("Category was added");
+        setCategories((p) => [...p, res]);
+      })
+      .catch((err) => alert.error(err));
   }
 
   function removeCategory(id) {
@@ -72,8 +61,7 @@ export default function Categories() {
 
       {categories.length === 0 && <p>There is no any category yet.</p>}
       <div className="card-columns">
-        {categories.length !== 0 &&
-          categories.map((cat, i) => <Small key={i} editCategory={editCategory} removeCategory={removeCategory} category={cat} />)}
+        {categories.length !== 0 && categories.map((cat, i) => <Small key={i} removeCategory={removeCategory} category={cat} />)}
       </div>
     </div>
   );

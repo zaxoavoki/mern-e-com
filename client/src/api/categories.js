@@ -1,5 +1,5 @@
-export function getAll() {
-  return fetch(`${process.env.REACT_APP_API_URL}/categories`)
+export function getAll(query) {
+  return fetch(`${process.env.REACT_APP_API_URL}/categories?${query}`)
     .then((res) => res.json())
     .then((res) => (res.error ? Promise.reject(res.error) : Promise.resolve(res)));
 }

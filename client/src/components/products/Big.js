@@ -37,7 +37,7 @@ export default function Big({ product }) {
         <Link to={`/products/${product._id}`}>
           <h6>{product.title}</h6>
         </Link>
-        <p>{product.description.substr(0, 50)}...</p>
+        <p>{product.description.substr(0, 40)}...</p>
         <div className="btn-group w-100" role="group">
           <button type="button" className="btn btn-primary">
             $ {product.price}

@@ -1,6 +1,5 @@
-export function getAll() {
-  const query = "sort=name&limit=2";
-  return fetchData(`${process.env.REACT_APP_API_URL}/users?${query}`);
+export function getAll(query) {
+  return fetchData(`/users?${query}`);
 }
 
 export function getOne(id) {
@@ -28,7 +27,6 @@ export function update(id, data, token) {
 }
 
 function fetchData(url, options) {
-  console.log(url);
   return fetch(`${process.env.REACT_APP_API_URL}${url}`, options)
     .then((res) => res.json())
     .then((res) => (res.error ? Promise.reject(res.error) : Promise.resolve(res)));

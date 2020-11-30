@@ -6,7 +6,7 @@ const Transaction = require("../models/Transaction");
 module.exports = (count) =>
   new Promise(async (res, rej) => {
     try {
-      await Rating.deleteMany(); // TODO: Clean collection optionally
+      await Rating.deleteMany();
 
       const transcations = await Transaction.find();
 
@@ -28,8 +28,6 @@ module.exports = (count) =>
           product: transcations[idx].product,
           stars: random.number(5),
         }).save();
-
-        console.log(i);
       }
       res("rating");
     } catch (err) {

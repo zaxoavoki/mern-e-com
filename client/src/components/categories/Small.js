@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-regular-svg-icons";
 
-export default function Small({ category, editCategory, removeCategory }) {
+export default function Small({ category, removeCategory }) {
   return (
     <div className="card mb-3 p-3">
       <h6 className="mb-0 d-flex align-items-center">
@@ -20,6 +20,5 @@ export default function Small({ category, editCategory, removeCategory }) {
 
 Small.propTypes = {
   category: PropTypes.any,
-  editCategory: PropTypes.any,
   removeCategory: PropTypes.any,
 };

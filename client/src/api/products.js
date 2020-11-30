@@ -1,5 +1,5 @@
-export function getAll() {
-  return fetchData("/products");
+export function getAll(query = "") {
+  return fetchData("/products?sort=" + query);
 }
 
 export function popular() {

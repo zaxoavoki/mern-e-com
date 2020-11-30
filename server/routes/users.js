@@ -67,9 +67,9 @@ router.get("/:id", (req, res) => {
 
 // Returns [users] || [] or {error}
 router.get("/", (req, res) => {
-  console.log(req.query);
   User.find({}, "-password -saved")
-    .limit(req.query.limit || 10)
+    .sort(req.query.sort)
+    .limit(+req.query.limit || 10)
     .then((users) => res.json(users))
     .catch(() => res.status(500).json({ error: "Something went wrong" }));
 });

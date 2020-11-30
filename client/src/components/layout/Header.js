@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Header() {
+  const history = useHistory();
   const { user, cookies } = useContext(AuthContext);
 
   function logout() {
     cookies.remove(process.env.REACT_APP_JWT_COOKIE_NAME);
+    history.push("/");
   }
 
   return (
