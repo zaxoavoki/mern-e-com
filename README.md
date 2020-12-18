@@ -20,3 +20,8 @@ Client side build with React.js.
 1. `cd client && npm install`
 2. Copy `.env` file from `.env.example`
 3. Run `npm run start`
+
+## To-do:
+
+- [ ] Change structure of database with Mongo models
+- [ ] Add ORM repositories
