@@ -25,3 +25,11 @@ Client side build with React.js.
 
 - [ ] Change structure of database with Mongo models
 - [ ] Add ORM repositories
+- [ ] Change controllers or add services
+- [ ] On loading check if all ENV variables exist
+
+##### Explanation
+
+ - Controllers work with requests and responses. Validating incoming data?
+ - Services (models) work with database and already validated data.
+ - In my case I put all work with db to another layer.

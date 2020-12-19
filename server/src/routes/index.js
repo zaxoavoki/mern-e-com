@@ -2,11 +2,11 @@ const { Router } = require("express");
 
 const router = Router();
 
-const authRouter = require("./auth");
-const userRouter = require("./users");
-const productRouter = require("./products");
-const commentsRouter = require("./comments");
-const categoryRouter = require("./categories");
+const authRouter = require("./auth.route");
+const userRouter = require("./users.route");
+const productRouter = require("./products.route");
+const commentsRouter = require("./comments.route");
+const categoryRouter = require("./categories.route");
 
 router.use(authRouter);
 router.use("/users", userRouter);

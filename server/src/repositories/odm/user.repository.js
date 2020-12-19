@@ -8,7 +8,7 @@ class UserRepository {
   }
 
   async getOneByEmail(email) {
-    return await User.findOne({ email }, "-password");
+    return await User.findOne({ email });
   }
 
   async deleteAll() {

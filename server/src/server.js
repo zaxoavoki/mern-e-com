@@ -2,14 +2,14 @@ require("dotenv").config();
 
 const cors = require("cors");
 const express = require("express");
-const router = require("./routes/router");
+const router = require("./routes");
 const { connect } = require("./utils/database");
 
 (async () => {
   const app = express();
   const port = process.env.APP_PORT || 4000;
 
-  await connect();
+  await connect({ uri: process.env.MONGODB_URI, name: process.env.MONGODB_NAME });
 
   app.use(cors());
   app.use(express.json());

@@ -1,5 +1,7 @@
+const bcrypt = require("bcrypt");
+const gravatar = require("gravatar");
 const { internet } = require("faker");
-const AuthController = require("../src/controllers/auth.controller");
+
 const UserRepository = require("../src/repositories/odm/user.repository");
 
 module.exports = async ({ count }) => {
@@ -8,11 +10,17 @@ module.exports = async ({ count }) => {
   } catch (err) {}
 
   for (let i = 0; i < count; i++) {
-    await AuthController.register({
+    const email = internet.email();
+    await UserRepository.create({
       username: internet.userName(),
-      email: internet.email(),
-      password: "password",
+      email,
+      password: await bcrypt.hash("password", parseInt(process.env.SALT_ROUNDS || 8)),
       role: Math.random() < 0.2 ? 2 : Math.random() < 0.3 ? 1 : 0,
+      avatar: gravatar.url(email, {
+        s: process.env.GRAVATAR_IMG_SIZE,
+        d: process.env.GRAVATAR_IMG_DEFAULT,
+        r: process.env.GRAVATAR_IMG_RATE,
+      }),
     });
   }
 };
