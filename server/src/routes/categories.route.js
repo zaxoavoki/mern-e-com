@@ -1,8 +1,8 @@
 const express = require("express");
 const validator = require("validator");
 
-const authMiddleware = require("../middlewares/auth");
-const adminMiddleware = require("../middlewares/admin");
+const authMiddleware = require("../middlewares/auth.middleware");
+const adminMiddleware = require("../middlewares/admin.middleware");
 
 const Category = require("../models/Category");
 const Product = require("../models/Product");

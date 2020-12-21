@@ -1,77 +1,46 @@
-const validator = require("validator");
 const { Router } = require("express");
 
-const User = require("../models/User");
-const authMiddleware = require("../middlewares/auth");
-const adminMiddleware = require("../middlewares/admin");
+const UserService = require("../services/user.service");
+const authMiddleware = require("../middlewares/auth.middleware");
+const adminMiddleware = require("../middlewares/admin.middleware");
 
 const router = Router();
 
-// {user} or {error}
 router.put("/:id", [authMiddleware], async (req, res) => {
-  if (req.user._id !== req.params.id) {
+  if (req.user._id !== req.params.id && process.env.ROLE_USR === req.user.role) {
+    // Does not belong to business-logic
     return res.status(500).json({ error: "You do not have permissions." });
   }
 
-  // validate incoming data
-  if (!validator.isEmail(req.body.email || "") || validator.isEmpty(req.body.username || "")) {
-    return res.status(406).json({ error: "Invalid data." });
-  }
-
   try {
-    // Check if email is already in use
-    const user = await User.findOne({ email: req.body.email });
-    if (user && user._id != req.user._id) {
-      console.log(user, req.user._id);
-      return res.status(403).json({ error: "Email is already in use." });
-    }
-
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        email: req.body.email,
-        username: req.body.username,
-      },
-      { new: true, projection: "-password" }
-    );
-
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(200).json({ user: await UserService.updateOneById(req.params.id, req.body) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
   }
 });
 
-// {user} or null or {error}
-router.delete("/:id", [authMiddleware, adminMiddleware], (req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ error: "User was not found." });
-      }
-      res.json(user);
-    })
-    .catch(() => res.status(500).json({ error: "Something went wrong." }));
+router.delete("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
+  try {
+    res.status(200).json({ user: await UserService.deleteOneById(req.params.id) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 });
 
-// Returns {user} or {error}
-router.get("/:id", (req, res) => {
-  User.findById(req.params.id, "-password -saved")
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ error: "User was not found." });
-      }
-      res.json(user);
-    })
-    .catch(() => res.status(500).json({ error: "Something went wrong." }));
+router.get("/:id", async (req, res) => {
+  try {
+    res.status(200).json({ user: await UserService.getOneById(req.params.id) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 });
 
-// Returns [users] || [] or {error}
-router.get("/", (req, res) => {
-  User.find({}, "-password -saved")
-    .sort(req.query.sort)
-    .limit(+req.query.limit || 10)
-    .then((users) => res.json(users))
-    .catch(() => res.status(500).json({ error: "Something went wrong" }));
+router.get("/", async (req, res) => {
+  try {
+    res.status(200).json({ users: await UserService.getAll(req.query) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 });
 
 module.exports = router;

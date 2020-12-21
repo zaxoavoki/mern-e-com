@@ -1,13 +1,12 @@
 const { Router, response } = require("express");
 
-const authMiddleware = require("../middlewares/auth");
-const adminMiddleware = require("../middlewares/admin");
+const authMiddleware = require("../middlewares/auth.middleware");
+const adminMiddleware = require("../middlewares/admin.middleware");
 
 const User = require("../models/User");
 const Product = require("../models/Product");
 const Comment = require("../models/Comment");
 const Transcation = require("../models/Transaction");
-const Rating = require("../models/Rating");
 
 const router = Router();
 

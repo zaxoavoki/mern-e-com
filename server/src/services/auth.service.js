@@ -19,8 +19,14 @@ class AuthService {
     );
   }
 
-  async refreshToken(token) {
-    // should I get token or user here?
+  async refreshToken(oldToken) {
+    const token = jwt.verify(oldToken, process.env.JWT_SECRET);
+    const user = await UserRepository.getOneByEmail(token.email);
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    return this.generateUserJWT(user);
   }
 
   async login({ email, password }) {
@@ -44,7 +50,11 @@ class AuthService {
     return this.generateUserJWT(user);
   }
 
-  async register({ username, email, password, role }) {
+  async register({ username, email, password, password_confirmation, role }) {
+    if (password !== password_confirmation) {
+      throw new Error("Passwords do not match");
+    }
+
     if (
       !validator.isLength(username || "", { min: 3, max: 32 }) ||
       !validator.isEmail(email || "") ||

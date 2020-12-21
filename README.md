@@ -30,6 +30,9 @@ Client side build with React.js.
 
 ##### Explanation
 
- - Controllers work with requests and responses. Validating incoming data?
- - Services (models) work with database and already validated data.
- - In my case I put all work with db to another layer.
+ - Controllers work with requests and responses. Validating incoming data.
+ - Services (models) work with repostories, manage already validated incoming data from controllers.
+ - Repositories work with database.
+
+ For our project we do not need so many abstraction layers. Let's put our controllers logic into services. 
+ Probably, in future, we will fix it.  

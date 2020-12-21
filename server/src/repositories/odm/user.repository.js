@@ -1,8 +1,6 @@
 const User = require("../../models/User");
 
 class UserRepository {
-  constructor() {}
-
   async create(user) {
     return await User.create(user);
   }
@@ -11,20 +9,25 @@ class UserRepository {
     return await User.findOne({ email });
   }
 
+  async getOneById(id, select = "") {
+    return await User.findById(id, select);
+  }
+
   async deleteAll() {
     return await User.deleteMany({});
   }
 
-  async updateById(_id, user) {
-    return await User.updateOne({ _id }, user);
+  async updateById(id, user, options = {}) {
+    return await User.findByIdAndUpdate(id, user, options);
   }
 
-  async getAll() {
-    return await User.find({}, "-password");
+  async getAll(options = {}, select = "-password", limit = 10) {
+    // TODO: Add sort option
+    return await User.find(options, select).limit(limit);
   }
 
-  async count() {
-    return User.estimatedDocumentCount();
+  async deleteOneById(id) {
+    return await User.deleteOne({ _id: id });
   }
 
   async getRandom() {
