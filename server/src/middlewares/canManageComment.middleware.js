@@ -12,6 +12,7 @@ module.exports = async function (req, res, next) {
   } catch (error) {
     res.status(200).json({ error: error.message });
   }
+  // FIXME: Put this logic into service
 
   next();
 };

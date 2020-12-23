@@ -1,6 +1,7 @@
+const mongoose = require("mongoose");
+
 const User = require("../../models/User");
 const Transaction = require("../../models/Transaction");
-const mongoose = require("mongoose");
 
 class UserRepository {
   async create(user) {
@@ -39,6 +40,22 @@ class UserRepository {
 
   async getSavedProducts(userId) {
     return await User.findById(userId, "saved", { populate: "saved" });
+  }
+
+  async saveProduct(userId, productId) {
+    return await User.findByIdAndUpdate(
+      userId,
+      { $push: { saved: mongoose.Types.ObjectId(productId) } },
+      { new: true, select: "-_id saved" }
+    );
+  }
+
+  async unsaveProduct(userId, productId) {
+    return await User.findByIdAndUpdate(
+      userId,
+      { $pull: { saved: mongoose.Types.ObjectId(productId) } },
+      { new: true, select: "-_id saved" }
+    );
   }
 
   // TODO: Such methods should return array of products

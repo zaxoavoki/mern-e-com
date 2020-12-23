@@ -11,13 +11,12 @@ module.exports = async function (req, res, next) {
     const decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     req.user = decoded;
 
-    const user = await UserRepository.getOneById(req.user._id, "-password -saved");
-    if (!user) {
+    if (!(await UserRepository.getOneById(req.user._id, "-password -saved"))) {
       return res.status(404).json({ error: "User was not found" });
     }
 
     next();
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };

@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const CommentService = require("../services/comment.service");
 const authMiddleware = require("../middlewares/auth.middleware");
-const commentAuthorMiddleware = require("../middlewares/commentAuthor.middleware");
+const canManageCommentMiddleware = require("../middlewares/canManageComment.middleware");
 
 const router = Router();
 
@@ -20,6 +20,14 @@ router.post("/:productId", [authMiddleware], async (req, res) => {
   }
 });
 
+router.get("/:productId/comments", async (req, res) => {
+  try {
+    res.status(200).json({ comment: await CommentService.getAllInProduct(req.params.productId) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     res.status(200).json({ comment: await CommentService.getOneById(req.params.id) });
@@ -28,7 +36,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", [authMiddleware, commentAuthorMiddleware], async (req, res) => {
+router.put("/:id", [authMiddleware, canManageCommentMiddleware], async (req, res) => {
   try {
     res
       .status(200)
@@ -38,7 +46,7 @@ router.put("/:id", [authMiddleware, commentAuthorMiddleware], async (req, res) =
   }
 });
 
-router.delete("/:id", [authMiddleware, commentAuthorMiddleware], async (req, res) => {
+router.delete("/:id", [authMiddleware, canManageCommentMiddleware], async (req, res) => {
   try {
     res.status(200).json({ comment: await CommentService.deleteById(req.params.id) });
   } catch (error) {

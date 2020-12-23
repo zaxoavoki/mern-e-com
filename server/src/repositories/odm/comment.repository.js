@@ -18,6 +18,10 @@ class CommentRepository {
     return await Comment.findByIdAndUpdate(id, comment, options);
   }
 
+  async getAllInProduct(id) {
+    return await Comment.find({ product: id }, "-product");
+  }
+
   async deleteById(id) {
     return await Comment.findByIdAndDelete(id);
   }
