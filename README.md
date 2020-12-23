@@ -20,3 +20,21 @@ Client side build with React.js.
 1. `cd client && npm install`
 2. Copy `.env` file from `.env.example`
 3. Run `npm run start`
+
+## To-do:
+
+- [ ] Change structure of database with Mongo models
+- [ ] Add ORM repositories
+- [ ] Change controllers or add services
+- [ ] On loading check if all ENV variables exist
+- [ ] Add validation layer for documents
+- [ ] Change `admin.middleware.js`
+
+##### Explanation
+
+ - Controllers work with requests and responses. Validating incoming data.
+ - Services (models) work with repostories, manage already validated incoming data from controllers.
+ - Repositories work with database.
+
+ For our project we do not need so many abstraction layers. Let's put our controllers logic into services. 
+ Probably, in future, we will fix it.  
