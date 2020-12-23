@@ -1,6 +1,7 @@
 const validator = require("validator");
 
 const CommentRepository = require("../repositories/odm/comment.repository");
+const ProductRepository = require("../repositories/odm/product.repository");
 
 class CommentService {
   async getOneById(id) {
@@ -21,6 +22,13 @@ class CommentService {
     }
 
     return await CommentRepository.create({ text, product, images, user });
+  }
+
+  async getAllInProduct(id) {
+    if (!(await ProductRepository.getOneById(id))) {
+      throw new Error("Product was not found");
+    }
+    return await CommentRepository.getAllInProduct(id);
   }
 
   async updateById(id, { text, images = [] }) {

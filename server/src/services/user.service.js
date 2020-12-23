@@ -1,6 +1,7 @@
 const validator = require("validator");
 
 const UserRepository = require("../repositories/odm/user.repository");
+const ProductRepository = require("../repositories/odm/product.repository");
 
 class UserService {
   async getOneById(id) {
@@ -49,6 +50,42 @@ class UserService {
       throw new Error("User was not found");
     }
     return await UserRepository.getSavedProducts(userId);
+  }
+
+  async saveProduct(userId, productId) {
+    const user = await UserRepository.getOneById(userId);
+    if (!user) {
+      throw new Error("User was not found");
+    }
+
+    // TODO: What should I return here?
+    if (!(await ProductRepository.getOneById(productId))) {
+      throw new Error("Product was not found");
+    }
+
+    if (user.saved.findIndex((e) => String(e) === productId) !== -1) {
+      return (await UserRepository.unsaveProduct(userId, productId)).saved;
+    }
+
+    return (await UserRepository.saveProduct(userId, productId)).saved;
+  }
+
+  async isSavedProduct(userId, productId) {
+    const user = await UserRepository.getOneById(userId);
+    if (!user) {
+      throw new Error("User was not found");
+    }
+
+    const product = await ProductRepository.getOneById(productId);
+    if (!product) {
+      throw new Error("Product was not found");
+    }
+
+    if (user.saved.findIndex((e) => String(e) === productId) === -1) {
+      return { isSaved: false, product };
+    }
+
+    return { isSaved: true, product };
   }
 
   async getBoughtProducts(userId) {

@@ -6,6 +6,24 @@ const currentUserMiddleware = require("../middlewares/currentUser.middleware");
 
 const router = Router();
 
+router.get("/product/is-saved/:id", [authMiddleware], async (req, res) => {
+  try {
+    // TODO: Return either or key-value obj or just value
+    res.status(200).json(await UserService.isSavedProduct(req.user._id, req.params.id));
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
+});
+
+router.get("/product/save/:id", [authMiddleware], async (req, res) => {
+  try {
+    // FIXME: Should return product not user
+    res.status(200).json({ product: await UserService.saveProduct(req.user._id, req.params.id) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
+});
+
 router.get("/saved", [authMiddleware], async (req, res) => {
   try {
     res.status(200).json(await UserService.getSavedProducts(req.user._id));
