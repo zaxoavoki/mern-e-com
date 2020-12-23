@@ -1,24 +1,23 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+// TODO: Change to service
+const UserRepository = require("../repositories/odm/user.repository");
 
-module.exports = function (req, res, next) {
+module.exports = async function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(403).json({ error: "You do not have permissions." });
   }
 
-  jwt.verify(req.headers.authorization, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ error: "Token has expired. Please, log in again." });
+  try {
+    const decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+    req.user = decoded;
+
+    const user = await UserRepository.getOneById(req.user._id, "-password -saved");
+    if (!user) {
+      return res.status(404).json({ error: "User was not found" });
     }
 
-    req.user = decoded;
-    User.findOne({ _id: req.user._id })
-      .then((user) => {
-        if (user) {
-          return next();
-        }
-        throw new Error();
-      })
-      .catch(() => res.status(500).json({ error: "Something went wrong." }));
-  });
+    next();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };

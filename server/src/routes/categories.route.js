@@ -1,52 +1,50 @@
-const express = require("express");
-const validator = require("validator");
+const { Router } = require("express");
 
+const CategoryService = require("../services/category.service");
 const authMiddleware = require("../middlewares/auth.middleware");
 const adminMiddleware = require("../middlewares/admin.middleware");
 
-const Category = require("../models/Category");
-const Product = require("../models/Product");
-
-const router = express.Router();
+const router = Router();
 
 router.get("/", async (req, res) => {
-  return res.status(200).json(await Category.find());
+  try {
+    res.status(200).json({ categories: CategoryService.getAll() });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 });
 
 router.get("/:id", async (req, res) => {
-  res.status(200).json({
-    ...(await Category.findOne({ _id: req.params.id }, {}, { lean: true })),
-    products: await Product.find({ category: req.params.id }),
-  });
+  try {
+    res.status(200).json({ category: await CategoryService.getOneById(req.params.id) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 });
 
 router.put("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
-  // update category in db
-  // new data is located in req.body
+  try {
+    res
+      .status(200)
+      .json({ category: await CategoryService.updateOneById(req.params.id, req.body) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 });
 
 router.post("/", [authMiddleware, adminMiddleware], async (req, res) => {
-  if (validator.isEmpty(req.body.name || "") || validator.isEmpty(req.body.description || "")) {
-    return res.status(406).json({ error: "Invalid data." });
-  }
-
   try {
-    res.status(201).json(
-      await new Category({
-        name: req.body.name,
-        description: req.body.description,
-      }).save()
-    );
-  } catch (err) {
-    res.status(500).json({ error: "Something went wrong." });
+    res.status(201).json({ category: await CategoryService.create(req.body) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
   }
 });
 
 router.delete("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
   try {
-    res.status(200).json(await Category.findOneAndRemove({ _id: req.params.id }));
-  } catch (err) {
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(200).json({ category: await CategoryService.deleteOneById(req.params.id) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
   }
 });
 

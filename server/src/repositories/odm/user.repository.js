@@ -1,4 +1,6 @@
 const User = require("../../models/User");
+const Transaction = require("../../models/Transaction");
+const mongoose = require("mongoose");
 
 class UserRepository {
   async create(user) {
@@ -33,6 +35,24 @@ class UserRepository {
   async getRandom() {
     const count = await User.estimatedDocumentCount();
     return await User.findOne().skip(Math.floor(Math.random() * count));
+  }
+
+  async getSavedProducts(userId) {
+    return await User.findById(userId, "saved", { populate: "saved" });
+  }
+
+  // TODO: Such methods should return array of products
+  // FIXME: Fix query
+  async getBoughtProducts(userId) {
+    return await Transaction.aggregate()
+      .match({ user: mongoose.Types.ObjectId(userId) })
+      .group({ _id: "$user", products: { $push: "$product" } })
+      .lookup({
+        from: "products",
+        localField: "products",
+        foreignField: "_id",
+        as: "products",
+      });
   }
 }
 

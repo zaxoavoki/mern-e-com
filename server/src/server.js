@@ -3,7 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const router = require("./routes");
-const { connect } = require("./utils/database");
+const { connect } = require("./helpers/database");
 
 (async () => {
   const app = express();

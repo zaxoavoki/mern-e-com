@@ -2,16 +2,27 @@ const { Router } = require("express");
 
 const UserService = require("../services/user.service");
 const authMiddleware = require("../middlewares/auth.middleware");
-const adminMiddleware = require("../middlewares/admin.middleware");
+const currentUserMiddleware = require("../middlewares/currentUser.middleware");
 
 const router = Router();
 
-router.put("/:id", [authMiddleware], async (req, res) => {
-  if (req.user._id !== req.params.id && process.env.ROLE_USR === req.user.role) {
-    // Does not belong to business-logic
-    return res.status(500).json({ error: "You do not have permissions." });
+router.get("/saved", [authMiddleware], async (req, res) => {
+  try {
+    res.status(200).json(await UserService.getSavedProducts(req.user._id));
+  } catch (error) {
+    res.status(200).json({ error: error.message });
   }
+});
 
+router.get("/bought", [authMiddleware], async (req, res) => {
+  try {
+    res.status(200).json({ products: await UserService.getBoughtProducts(req.user._id) });
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
+});
+
+router.put("/:id", [authMiddleware, currentUserMiddleware], async (req, res) => {
   try {
     res.status(200).json({ user: await UserService.updateOneById(req.params.id, req.body) });
   } catch (error) {
@@ -19,7 +30,7 @@ router.put("/:id", [authMiddleware], async (req, res) => {
   }
 });
 
-router.delete("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
+router.delete("/:id", [authMiddleware, currentUserMiddleware], async (req, res) => {
   try {
     res.status(200).json({ user: await UserService.deleteOneById(req.params.id) });
   } catch (error) {
@@ -35,7 +46,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", [authMiddleware], async (req, res) => {
   try {
     res.status(200).json({ users: await UserService.getAll(req.query) });
   } catch (error) {

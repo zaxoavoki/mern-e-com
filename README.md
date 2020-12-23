@@ -27,6 +27,8 @@ Client side build with React.js.
 - [ ] Add ORM repositories
 - [ ] Change controllers or add services
 - [ ] On loading check if all ENV variables exist
+- [ ] Add validation layer for documents
+- [ ] Change `admin.middleware.js`
 
 ##### Explanation
 

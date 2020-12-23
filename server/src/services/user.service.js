@@ -4,9 +4,6 @@ const UserRepository = require("../repositories/odm/user.repository");
 
 class UserService {
   async getOneById(id) {
-    if (!validator.isMongoId(id)) {
-      throw new Error("Invalid id");
-    }
     return await UserRepository.getOneById(id, "-password -saved");
   }
 
@@ -19,16 +16,13 @@ class UserService {
   }
 
   async deleteOneById(id) {
-    if (!validator.isMongoId(id)) {
-      throw new Error("Invalid id");
-    }
     if (!(await UserRepository.getOneById(id))) {
       throw new Error("User was not found");
     }
     return await UserRepository.deleteOneById(id);
   }
 
-  // TODO: Put validation in another layer
+  // TODO: Put validation to helper folder
   async updateOneById(id, { email, username }) {
     if (!validator.isEmail(email || "") || validator.isEmpty(username || "")) {
       throw new Error("Invalid data");
@@ -48,6 +42,21 @@ class UserService {
       { email, username },
       { new: true, projection: "-password" }
     );
+  }
+
+  async getSavedProducts(userId) {
+    if (!(await UserRepository.getOneById(userId))) {
+      throw new Error("User was not found");
+    }
+    return await UserRepository.getSavedProducts(userId);
+  }
+
+  async getBoughtProducts(userId) {
+    // TODO: Is there any reason to leave this?
+    if (!(await UserRepository.getOneById(userId))) {
+      throw new Error("User was not found");
+    }
+    return await UserRepository.getBoughtProducts(userId);
   }
 }
 

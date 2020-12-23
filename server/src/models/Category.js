@@ -12,7 +12,6 @@ module.exports =
         },
         description: {
           type: String,
-          required: true,
         },
       },
       {

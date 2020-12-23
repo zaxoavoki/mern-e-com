@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-const { connect, disconnect } = require("../src/utils/database");
+const { connect, disconnect } = require("../src/helpers/database");
 
 dotenv.config();
 
