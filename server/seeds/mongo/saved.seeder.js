@@ -1,5 +1,5 @@
-const UserRepository = require("../src/repositories/odm/user.repository");
-const ProductRepository = require("../src/repositories/odm/product.repository");
+const UserRepository = require("../../src/repositories/odm/user.repository");
+const ProductRepository = require("../../src/repositories/odm/product.repository");
 
 module.exports = async ({ count }) => {
   for (const user of await UserRepository.getAll()) {

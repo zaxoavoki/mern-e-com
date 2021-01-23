@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/:id", async (req, res) => {
   try {
-    res.status(200).json({ product: await ProductService.getOneById(req.params.id) });
+    res.status(200).json(await ProductService.getOneById(req.params.id));
   } catch (error) {
     res.status(200).json({ error: error.message });
   }
@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
   try {
-    res.status(200).json({ product: await ProductService.updateById(req.params.id, req.body) });
+    res.status(200).json(await ProductService.updateById(req.params.id, req.body));
   } catch (error) {
     res.status(200).json({ error: error.message });
   }
@@ -25,7 +25,7 @@ router.put("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
 
 router.delete("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
   try {
-    res.status(200).json({ product: await ProductService.deleteOneById(req.params.id) });
+    res.status(200).json(await ProductService.deleteOneById(req.params.id));
   } catch (error) {
     res.status(200).json({ error: error.message });
   }
@@ -33,7 +33,7 @@ router.delete("/:id", [authMiddleware, adminMiddleware], async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    res.status(200).json({ product: await ProductService.getAll(req.query) });
+    res.status(200).json(await ProductService.getAll(req.query));
   } catch (error) {
     res.status(200).json({ error: error.message });
   }

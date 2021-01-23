@@ -1,8 +1,8 @@
 const { lorem, random, image } = require("faker");
 
-const UserRepository = require("../src/repositories/odm/user.repository");
-const ProductRepository = require("../src/repositories/odm/product.repository");
-const CommentRepository = require("../src/repositories/odm/comment.repository");
+const UserRepository = require("../../src/repositories/odm/user.repository");
+const ProductRepository = require("../../src/repositories/odm/product.repository");
+const CommentRepository = require("../../src/repositories/odm/comment.repository");
 
 module.exports = async ({ count }) => {
   try {

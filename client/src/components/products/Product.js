@@ -15,6 +15,7 @@ function Product() {
   useEffect(() => {
     getOne(productId)
       .then((res) => {
+        console.log(res);
         setProduct(res);
 
         if (user) {

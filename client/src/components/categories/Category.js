@@ -9,6 +9,7 @@ function Category() {
   const { categoryId } = useParams();
   const [category, setCategory] = useState({ products: [] });
 
+  // TODO: Fix api
   useEffect(() => {
     getCategory(categoryId)
       .then((res) => setCategory(res))

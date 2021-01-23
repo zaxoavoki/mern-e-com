@@ -22,6 +22,7 @@ module.exports =
         category: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Category",
+          required: true,
         },
       },
       {

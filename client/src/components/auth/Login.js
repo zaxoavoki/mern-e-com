@@ -32,7 +32,7 @@ function Login() {
     authLogin(email.value, password.value)
       .then((res) => {
         cookies.set(process.env.REACT_APP_JWT_COOKIE_NAME, res.token, {
-          expires: new Date(Date.now() + 1000 * 3600 * 2),
+          expires: new Date(Date.now() + 1000 * 3600 * 2), // TODO: Change to process.env variable
           path: "/",
         });
         history.push("/");

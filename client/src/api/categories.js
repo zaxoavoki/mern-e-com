@@ -1,37 +1,34 @@
 export function getAll(query) {
-  return fetch(`${process.env.REACT_APP_API_URL}/categories?${query}`)
-    .then((res) => res.json())
-    .then((res) => (res.error ? Promise.reject(res.error) : Promise.resolve(res)));
+  return fetchData(`/categories?${query}`);
 }
 
 export function getOne(id) {
-  return fetch(`${process.env.REACT_APP_API_URL}/categories/${id}`)
-    .then((res) => res.json())
-    .then((res) => (res.error ? Promise.reject(res.error) : Promise.resolve(res)));
+  return fetchData(`/categories/${id}`);
 }
 
 export function add(data, token) {
-  return fetch(`${process.env.REACT_APP_API_URL}/categories`, {
+  return fetchData("/categories", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
       Authorization: token,
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
     },
-  })
-    .then((res) => res.json())
-    .then((res) => (res.error ? Promise.reject(res.error) : Promise.resolve(res)));
+  });
 }
 
 export function remove(id, token) {
-  return fetch(`${process.env.REACT_APP_API_URL}/categories/${id}`, {
+  return fetchData(`/categories/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: token,
     },
-  })
+  });
+}
+
+// TODO: Extract to another helper file
+function fetchData(url, options) {
+  return fetch(`${process.env.REACT_APP_API_URL}${url}`, options)
     .then((res) => res.json())
     .then((res) => (res.error ? Promise.reject(res.error) : Promise.resolve(res)));
 }
-
-// TODO: Rewrite with fetchData

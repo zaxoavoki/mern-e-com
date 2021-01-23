@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const User = require("../../models/User");
-const Transaction = require("../../models/Transaction");
+const User = require("../../models/odm/User");
+const Transaction = require("../../models/odm/Transaction");
 
 class UserRepository {
   async create(user) {

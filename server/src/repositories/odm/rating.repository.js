@@ -1,4 +1,4 @@
-const Rating = require("../../models/Rating");
+const Rating = require("../../models/odm/Rating");
 
 class RatingRepository {
   async create(rating) {

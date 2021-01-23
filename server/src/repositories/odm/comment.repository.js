@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Comment = require("../../models/Comment");
+const Comment = require("../../models/odm/Comment");
 
 class CommentRepository {
   async create(comment) {

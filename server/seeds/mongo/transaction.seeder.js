@@ -1,8 +1,8 @@
 const { random } = require("faker");
 
-const UserRepository = require("../src/repositories/odm/user.repository");
-const ProductRepository = require("../src/repositories/odm/product.repository");
-const TransactionRepository = require("../src/repositories/odm/transaction.repository");
+const UserRepository = require("../../src/repositories/odm/user.repository");
+const ProductRepository = require("../../src/repositories/odm/product.repository");
+const TransactionRepository = require("../../src/repositories/odm/transaction.repository");
 
 module.exports = async ({ count }) => {
   try {

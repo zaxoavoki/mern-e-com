@@ -7,9 +7,7 @@ function Categories() {
 
   useEffect(() => {
     getCategories()
-      .then((res) => {
-        setCategories(res);
-      })
+      .then((res) => setCategories(res))
       .catch(() => {});
   }, []);
 
