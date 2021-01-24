@@ -2,10 +2,13 @@ require("dotenv").config();
 
 const cors = require("cors");
 const express = require("express");
-const router = require("./routes");
+const { sequelize } = require("./models");
+// const router = require("./routes");
 const { getSequelize } = require("./helpers/database.mysql");
 
 (async () => {
+  await sequelize.sync();
+
   const app = express();
   const port = process.env.APP_PORT || 4000;
 

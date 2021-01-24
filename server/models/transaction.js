@@ -8,23 +8,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      this.belongsToMany(models.Product, {
+        through: models.TransactionProduct,
+        as: "products",
+        foreignKey: "transactionId",
+      });
     }
   }
-
   Transaction.init(
-    {
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.STRING,
-        defaultValue: "Unfinished",
-      },
-    },
+    {},
     {
       sequelize,
+      tableName: "transactions",
       modelName: "Transaction",
     }
   );
