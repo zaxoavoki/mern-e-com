@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const { internet } = require("faker");
 
-const UserRepository = require("../../src/repositories/odm/user.repository");
+const UserRepository = require("../../repositories/odm/user.repository");
 
 module.exports = async ({ count }) => {
   try {

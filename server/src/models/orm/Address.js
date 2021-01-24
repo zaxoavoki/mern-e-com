@@ -1,10 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { getSequelize } = require("../../helpers/database.mysql");
-
-const Address = require("./Address");
 const Role = require("./Role");
 
-const User = getSequelize().define("User", {
+const Address = getSequelize().define("Address", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -22,13 +20,6 @@ const User = getSequelize().define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  address_id: {
-    type: DataTypes.BIGINT,
-    reference: {
-      model: Address,
-      key: "id",
-    },
-  },
   role_id: {
     type: DataTypes.BIGINT,
     reference: {
@@ -38,4 +29,4 @@ const User = getSequelize().define("User", {
   },
 });
 
-module.exports = User;
+module.exports = Address;

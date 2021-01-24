@@ -1,6 +1,6 @@
 const { lorem } = require("faker");
 
-const CategoryRepository = require("../../src/repositories/odm/category.repository");
+const CategoryRepository = require("../../repositories/odm/category.repository");
 
 module.exports = async ({ count }) => {
   try {

@@ -1,7 +1,7 @@
 const { commerce, image, random, lorem } = require("faker");
 
-const ProductRepository = require("../../src/repositories/odm/product.repository");
-const CategoryRepository = require("../../src/repositories/odm/category.repository");
+const ProductRepository = require("../../repositories/odm/product.repository");
+const CategoryRepository = require("../../repositories/odm/category.repository");
 
 module.exports = async ({ count }) => {
   try {

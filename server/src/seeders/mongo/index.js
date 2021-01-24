@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-const { connect, disconnect } = require("../../src/helpers/database.mongo");
+const { connect, disconnect } = require("../../helpers/database.mongo");
 
 dotenv.config();
 
