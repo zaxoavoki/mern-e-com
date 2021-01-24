@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAll } from "../api/products";
 import Big from "./products/Big";
+import faker from "faker";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -37,7 +38,7 @@ function Home() {
 
       {products.length !== 0 &&
         products.map((e) => (
-          <div key={e._id} className="col-3">
+          <div key={e.id} className="col-3">
             <Big product={e} />
           </div>
         ))}

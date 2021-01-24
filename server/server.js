@@ -3,7 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const { sequelize } = require("./models");
-// const router = require("./routes");
+const router = require("./routes");
 const { getSequelize } = require("./helpers/database.mysql");
 
 (async () => {
@@ -22,7 +22,7 @@ const { getSequelize } = require("./helpers/database.mysql");
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  // app.use("/", router);
+  app.use("/", router);
 
   app.listen(port, () => console.log(`🚩 Listening at http://localhost:${port}`));
 })();

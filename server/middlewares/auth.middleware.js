@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 // TODO: Change to service
-const UserRepository = require("../repositories/odm/user.repository");
+const UserRepository = require("../repositories/orm/user.repository");
 
 module.exports = async function (req, res, next) {
   if (!req.headers.authorization) {

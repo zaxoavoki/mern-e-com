@@ -22,7 +22,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "productId",
       });
     }
+
+    toJSON() {
+      return { ...this.get() };
+    }
   }
+
   Product.init(
     {
       name: {
@@ -37,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE(11, 2).UNSIGNED,
         defaultValue: 0,
       },
+      image: DataTypes.STRING,
     },
     {
       sequelize,

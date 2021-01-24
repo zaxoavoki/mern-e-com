@@ -11,7 +11,7 @@ export function getOne(id) {
 }
 
 export function saved(token) {
-  return fetchData("/products/saved", {
+  return fetchData("/users/saved", {
     headers: {
       Authorization: token,
     },
@@ -19,7 +19,7 @@ export function saved(token) {
 }
 
 export function bought(token) {
-  return fetchData("/products/bought", {
+  return fetchData("/users/bought", {
     headers: {
       Authorization: token,
     },
@@ -27,7 +27,8 @@ export function bought(token) {
 }
 
 export function isSaved(id, token) {
-  return fetchData(`/products/is_saved/${id}`, {
+  console.log(`/users/is_saved/${id}`);
+  return fetchData(`/users/is_saved/${id}`, {
     headers: {
       Authorization: token,
     },

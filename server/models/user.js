@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      name: {
+      username: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      avatar: DataTypes.STRING,
       password: DataTypes.STRING,
       role: {
         type: DataTypes.ENUM("admin", "user", "moderator"),

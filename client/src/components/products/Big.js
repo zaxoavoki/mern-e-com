@@ -15,7 +15,7 @@ export default function Big({ product }) {
 
   useEffect(() => {
     if (user) {
-      isSaved(product._id, token)
+      isSaved(product.id, token)
         .then((res) => setStar(res))
         .catch(() => {});
     }
@@ -32,9 +32,9 @@ export default function Big({ product }) {
 
   return (
     <div className="card mb-3">
-      <img className="card-img-top" src={product.images[0]} alt="Image" />
+      <img className="card-img-top" src={product.images ? product.images[0] : product.image} alt="Image" />
       <div className="card-body">
-        <Link to={`/products/${product._id}`}>
+        <Link to={`/products/${product.id}`}>
           <h6>{product.title}</h6>
         </Link>
         <p>{product.description.substr(0, 40)}...</p>
@@ -43,7 +43,7 @@ export default function Big({ product }) {
             $ {product.price}
           </button>
           {user && (
-            <button className={`btn btn-${!star ? "outline-" : ""}primary`} onClick={() => saveProduct(product._id)}>
+            <button className={`btn btn-${!star ? "outline-" : ""}primary`} onClick={() => saveProduct(product.id)}>
               <FontAwesomeIcon className={star ? "text-white" : ""} icon={star ? fasStar : faStar} />
             </button>
           )}

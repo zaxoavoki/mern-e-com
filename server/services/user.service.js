@@ -81,6 +81,9 @@ class UserService {
       throw new Error("Product was not found");
     }
 
+    const saved = UserRepository.getSavedProductsByUserId(userId);
+    //
+
     if (user.saved.findIndex((e) => String(e) === productId) === -1) {
       return { isSaved: false, product };
     }

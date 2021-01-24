@@ -9,7 +9,7 @@ class AuthService {
   generateUserJWT(user) {
     return jwt.sign(
       {
-        _id: user._id,
+        _id: user.id,
         username: user.username,
         email: user.email,
         role: user.role,

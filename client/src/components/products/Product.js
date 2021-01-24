@@ -15,7 +15,6 @@ function Product() {
   useEffect(() => {
     getOne(productId)
       .then((res) => {
-        console.log(res);
         setProduct(res);
 
         if (user) {
@@ -25,7 +24,7 @@ function Product() {
             .catch(() => {});
         }
       })
-      .catch(() => {});
+      .catch((err) => console.log(err));
   }, []);
 
   function saveProduct(id) {
@@ -42,7 +41,7 @@ function Product() {
             <Link to="/categories">Categories</Link>
           </li>
           <li className="breadcrumb-item active">
-            <Link to={`/categories/${(product && product.category && product.category._id) || ""}`}>
+            <Link to={`/categories/${(product && product.category && product.category.id) || ""}`}>
               {(product && product.category && product.category.name) || "Unknown"}
             </Link>
           </li>
@@ -54,7 +53,7 @@ function Product() {
         {product && (
           <div className="row">
             <div className="col-4">
-              <img className="img-fluid rounded" src={product.images[0]} alt="Image" />
+              <img className="img-fluid rounded" src={product.images ? product.images[0] : product.image} alt="Image" />
               <div className="btn-group my-2 w-100">
                 <button className="btn btn-primary w-100">Buy</button>
                 {user && (
