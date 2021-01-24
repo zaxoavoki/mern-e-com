@@ -7,7 +7,7 @@ const { sequelize } = require("./models");
 const { getSequelize } = require("./helpers/database.mysql");
 
 (async () => {
-  await sequelize.sync();
+  // await sequelize.sync();
 
   const app = express();
   const port = process.env.APP_PORT || 4000;

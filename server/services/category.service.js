@@ -1,6 +1,6 @@
 const validator = require("validator");
 
-const CategoryRepository = require("../repositories/odm/category.repository");
+const CategoryRepository = require("../repositories/orm/category.repository");
 
 class CategoryService {
   async getAll() {

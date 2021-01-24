@@ -1,6 +1,6 @@
 const validator = require("validator");
 
-const ProductRepository = require("../repositories/odm/product.repository");
+const ProductRepository = require("../repositories/orm/product.repository");
 
 class ProductService {
   async getOneById(id) {

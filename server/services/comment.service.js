@@ -1,7 +1,7 @@
 const validator = require("validator");
 
-const CommentRepository = require("../repositories/odm/comment.repository");
-const ProductRepository = require("../repositories/odm/product.repository");
+const CommentRepository = require("../repositories/orm/comment.repository");
+const ProductRepository = require("../repositories/orm/product.repository");
 
 class CommentService {
   async getOneById(id) {

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const validator = require("validator");
 
-const UserRepository = require("../repositories/odm/user.repository");
+const UserRepository = require("../repositories/orm/user.repository");
 
 class AuthService {
   generateUserJWT(user) {

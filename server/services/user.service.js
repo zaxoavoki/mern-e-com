@@ -1,7 +1,7 @@
 const validator = require("validator");
 
-const UserRepository = require("../repositories/odm/user.repository");
-const ProductRepository = require("../repositories/odm/product.repository");
+const UserRepository = require("../repositories/orm/user.repository");
+const ProductRepository = require("../repositories/orm/product.repository");
 
 class UserService {
   async getOneById(id) {
